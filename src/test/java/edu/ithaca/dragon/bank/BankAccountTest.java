@@ -25,6 +25,11 @@ class BankAccountTest {
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
         assertFalse( BankAccount.isEmailValid(""));
+
+        //CE Added
+        assertFalse(BankAccount.isEmailValid("a@@b.com"));
+        assertFalse(BankAccount.isEmailValid("a@c*"));
+
     }
 
     @Test
