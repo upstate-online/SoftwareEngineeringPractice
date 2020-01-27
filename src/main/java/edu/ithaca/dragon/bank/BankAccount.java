@@ -28,16 +28,12 @@ public class BankAccount {
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
-     *
-     * Throws Ins.Fund. Exception if withdraw amount is greater than balance
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount <= balance){
+        if (amount>0 && amount <= balance){
             balance -= amount;
         }
-        else {
-            throw new InsufficientFundsException("Not enough money");
-        }
+
     }
 
 
@@ -45,30 +41,42 @@ public class BankAccount {
         if(email==""){
             return false;
         }
-        String [ ] symbol = {"@@","--","__","..","`","~","!","#","$","%","^","&","*","(",")","=","+","[","{\",\"}\",\"]\",\";\",\":\",\"<\",\">\",\",\",\"?\",\"/\",\"\'\",\"\"","\\","|"};
+        String [ ] symbol = {"@@","--","__","..","-@","@-","@_","_@","@.",".@","`","~","!","#","$","%","^","&","*","(",")","=","+","[","{","}","]",";",": ","<",">",",","?","/","'","\"","\\","|"};
         char [ ] symbol2 = {'-','@','_','.'};
 
-
-
-        //check if there's double or wrong symbol
+        //check if there's wrong symbol
         for(int i=0;i<symbol.length;i++){
             if(email.contains(symbol[i])) {
                 return false;
             }
         }
 
-        //check if it's located at beginning or last two
+
+        //check valid location
+        int index=0;
         for(int i=0;i<symbol2.length;i++){
-            if(email.indexOf(symbol2[i])==0&&email.indexOf(symbol2[i])==email.length()-1&&email.indexOf(symbol2[i])==email.length()-2) {
-                return false;
+            if(email.indexOf(symbol2[i]) != 0 && email.lastIndexOf(symbol2[i])!=email.length()-1 & email.lastIndexOf(symbol2[i])!=email.length()-2) {
+                index = index +0;
+            }
+            else {
+                index = index +1;
             }
         }
-
-        //check if @ is in front of . and both not in position -1
-        if(email.indexOf('@')>email.indexOf('.')||email.indexOf('@')==-1||email.indexOf('.')==-1){
+        if(index>0){
             return false;
-        }else{
-            return true;}
+        }
+
+        //check if @ is in front of one. and both not in position -1
+
+        if(email.indexOf('@')>email.lastIndexOf('.')||email.indexOf('@')==-1||email.indexOf('.')==-1){
+            return false;
+        }
+        else if(email.indexOf('@')>email.indexOf('.') && email.indexOf('.')>email.lastIndexOf('.')){
+            return false;
+        }
+
+        //Nothing wrong
+        return true;
 
     }
 }
