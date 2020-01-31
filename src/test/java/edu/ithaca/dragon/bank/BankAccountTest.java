@@ -183,6 +183,18 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        //Negative Amount
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100));
+
+        //More than two decimal places
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.0001));
+
+        //Negative and more than two decimal places
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100.0001));
+
+
+
     }
 
 }
