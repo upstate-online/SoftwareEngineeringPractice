@@ -239,7 +239,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException {
         BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
         BankAccount bankAccount2 = new BankAccount("a@b.com", 0);
         BankAccount bankAccount3 = new BankAccount("a@b.com", 0);

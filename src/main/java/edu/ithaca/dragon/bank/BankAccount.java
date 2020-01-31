@@ -128,7 +128,15 @@ public class BankAccount {
     }
 
     /** transfers valid amount of money from one account to another **/
-    public void transfer(double amount, BankAccount transferee){
+    public void transfer(double amount, BankAccount transferee)throws InsufficientFundsException{
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid Amount: " + amount );
+        }
+        else{
+            this.withdraw(amount);
+            transferee.deposit(amount);
+
+        }
 
 
     }
