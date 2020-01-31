@@ -84,6 +84,17 @@ class BankAccountTest {
         //Equiv: 300 over balance
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+
+        //Beyond Two Decimal Places
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.withdraw(1.001));
+
+        //Negative Numbers Exception
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.withdraw(-1.00));
+
+        //Two Decimal Places and Negative Numbers
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.withdraw(-1.0001));
+
 
     }
 
