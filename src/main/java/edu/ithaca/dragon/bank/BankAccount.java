@@ -16,7 +16,7 @@ public class BankAccount {
             this.balance = startingBalance;
                 }
             else{
-                throw new IllegalArgumentException("Invalid Balance: " + startingBalance );
+                throw new IllegalArgumentException("Invalid Balance Entered: " + startingBalance );
             }
         }
 
@@ -39,7 +39,7 @@ public class BankAccount {
     public void withdraw (double amount) throws InsufficientFundsException {
 
         if(isAmountValid(amount) != true){
-            throw new IllegalArgumentException("Invalid Balance: " + amount );
+            throw new IllegalArgumentException("Invalid Amount: " + amount );
         }
 
         else if(amount > balance){
@@ -116,13 +116,19 @@ public class BankAccount {
     }
 
     /** deposits valid amount into account**/
-    public static void deposit(double amount){
+    public void deposit(double amount){
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid Amount: " + amount );
+        }
 
+        else{
+            balance += amount;
+        }
 
     }
 
     /** transfers valid amount of money from one account to another **/
-    public static void transfer(double amount){
+    public void transfer(double amount, BankAccount transferee){
 
 
     }

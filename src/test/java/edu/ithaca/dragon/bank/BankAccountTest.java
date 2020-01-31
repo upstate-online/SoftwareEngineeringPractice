@@ -238,4 +238,51 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void transferTest(){
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 0);
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
+
+        //valid transfers
+        bankAccount1.transfer(1,bankAccount2);
+        assertEquals(1, bankAccount2.getBalance()); //boarder
+        assertEquals(199, bankAccount1.getBalance()); //boarder
+
+        bankAccount1.transfer(10.50,bankAccount2);
+        assertEquals(11.50, bankAccount2.getBalance()); //equivalence
+        assertEquals(188.50, bankAccount1.getBalance()); //equivalence
+
+        bankAccount1.transfer(100,bankAccount2);
+        assertEquals(111.50, bankAccount2.getBalance());//boarder
+        assertEquals(88.50, bankAccount1.getBalance()); //boarder
+
+        //overdrawn transfers (valid amounts)
+        assertThrows(InsufficientFundsException.class, ()->bankAccount3.transfer(0.01, bankAccount2)); //boarder
+        assertThrows(InsufficientFundsException.class, ()->bankAccount3.transfer(1.01, bankAccount2)); //equivalence
+        assertThrows(InsufficientFundsException.class, ()->bankAccount3.transfer(1.00, bankAccount2)); //boarder
+
+        //invalid amounts
+        //Invalid Amounts: Exception Throwing
+        //Beyond Two Decimal Places
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.transfer(-1.001,bankAccount3));
+
+        //Negative Numbers Exception
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.transfer(-1.00, bankAccount3));
+
+        //Two Decimal Places and Negative Numbers
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.transfer(-1.0001, bankAccount3));
+
+        assertEquals(0, bankAccount3.getBalance());
+
+
+
+
+
+
+
+
+    }
+
+
 }
