@@ -41,19 +41,19 @@ class BankAccountTest {
         assertEquals(100, bankAccount.getBalance());
 
 
-        //CE: Negative Withdraw Amounts
-
-        //Equivalence Test Neg. Decimals: Withdraw "-0.10" : current balance 100
-        bankAccount.withdraw(-0.10);
-        assertEquals(100.,bankAccount.getBalance());
-
-        //Equivalence Test: Withdraw "-1.00" : current balance 100
-        bankAccount.withdraw(-1.00);
-        assertEquals(100,bankAccount.getBalance());
-
-        //Equivalence Test: Withdraw "-100.00" : current balance 100
-        bankAccount.withdraw(-100.00);
-        assertEquals(100,bankAccount.getBalance());
+//        //CE: Negative Withdraw Amounts (Tests no longer valid with update to method)
+//
+//        //Equivalence Test Neg. Decimals: Withdraw "-0.10" : current balance 100
+//        bankAccount.withdraw(-0.10);
+//        assertEquals(100.,bankAccount.getBalance());
+//
+//        //Equivalence Test: Withdraw "-1.00" : current balance 100
+//        bankAccount.withdraw(-1.00);
+//        assertEquals(100,bankAccount.getBalance());
+//
+//        //Equivalence Test: Withdraw "-100.00" : current balance 100
+//        bankAccount.withdraw(-100.00);
+//        assertEquals(100,bankAccount.getBalance());
 
         //CE: Withdraw Invervals Cents and Dollars
 
@@ -204,6 +204,36 @@ class BankAccountTest {
         //Negative and more than two decimal places
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100.0001));
 
+
+
+    }
+     @Test
+     void depositTest(){
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+
+        //CE: Withdraw Invervals Cents and Dollars
+
+        //Equiv: Cents (Less than $1)
+        bankAccount1.deposit(0.99);
+        assertEquals(200.99,bankAccount1.getBalance());
+
+        //Boarder: Dollar ($1)
+        bankAccount1.deposit(1.00);
+        assertEquals(201.99,bankAccount1.getBalance());
+
+        //Equiv: Dollars and Cents
+        bankAccount1.deposit(1.01);
+        assertEquals(203.00,bankAccount1.getBalance());
+
+        //Invalid Amounts: Exception Throwing
+        //Beyond Two Decimal Places
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(1.001));
+
+        //Negative Numbers Exception
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-1.00));
+
+        //Two Decimal Places and Negative Numbers
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-1.0001));
 
 
     }
