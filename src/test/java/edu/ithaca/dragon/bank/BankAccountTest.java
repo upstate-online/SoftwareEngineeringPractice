@@ -75,14 +75,14 @@ class BankAccountTest {
         bankAccount.withdraw(97.00);
         assertEquals(0.00,bankAccount.getBalance());
 
-//        //Equiv: 0.01 over balance
-//        assertThrows(InsufficientFundsException.class, ()->bankAccount.withdraw(0.01));
-//
-//        //Equiv: 1.00 over balance
-//        assertThrows(InsufficientFundsException.class, ()->bankAccount.withdraw(1.00));
-//
-//        //Equiv: 300 over balance
-//        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        //Equiv: 0.01 over balance
+        assertThrows(InsufficientFundsException.class, ()->bankAccount.withdraw(0.01));
+
+        //Equiv: 1.00 over balance
+        assertThrows(InsufficientFundsException.class, ()->bankAccount.withdraw(1.00));
+
+        //Equiv: 300 over balance
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
 
     }
@@ -142,6 +142,35 @@ class BankAccountTest {
 
         //Equivalence: .not in email address
         assertFalse(BankAccount.isEmailValid("a@bcom"));
+
+
+    }
+
+
+    @Test
+
+    void isAmountValidTest(){
+
+        //Negative Amount Tests
+        assertFalse(BankAccount.isAmountValid(-10000.0000000000009));//boarder case
+        assertFalse(BankAccount.isAmountValid(-12.011)); // equivalence case
+        assertFalse(BankAccount.isAmountValid(-0.01)); //equivalence case
+        assertTrue(BankAccount.isAmountValid(0.00)); //border case
+
+        //Zero and Cents Tests
+        assertTrue(BankAccount.isAmountValid(0.00)); //border case
+        assertTrue(BankAccount.isAmountValid(0.01)); //equivalence case
+        assertFalse(BankAccount.isAmountValid(0.011)); //equivalence case
+        assertFalse(BankAccount.isAmountValid(0.00000000000000001)); //border case
+
+
+        //Positive Amount Tests
+        assertTrue(BankAccount.isAmountValid(1.00)); //boarder case
+        assertFalse(BankAccount.isAmountValid(1.000)); //equivalence case
+        assertFalse(BankAccount.isAmountValid(1.001)); //equivalence case
+        assertTrue(BankAccount.isAmountValid(100.01)); //boarder case
+
+
 
 
     }
