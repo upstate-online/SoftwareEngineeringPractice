@@ -166,7 +166,7 @@ class BankAccountTest {
 
         //Positive Amount Tests
         assertTrue(BankAccount.isAmountValid(1.00)); //boarder case
-        assertFalse(BankAccount.isAmountValid(1.000)); //equivalence case
+        assertFalse(BankAccount.isAmountValid(1.00001)); //equivalence case
         assertFalse(BankAccount.isAmountValid(1.001)); //equivalence case
         assertTrue(BankAccount.isAmountValid(100.01)); //boarder case
 

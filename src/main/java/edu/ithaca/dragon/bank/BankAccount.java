@@ -93,9 +93,19 @@ public class BankAccount {
      * @return  true if amount is neither negative nor beyond two decimal places**/
 
     public static boolean isAmountValid(double amount){
+        if((amount * -1) > 0 ){
+            return false;
+        }
 
+        double newAmt = amount * 100;
 
-        return false;
+        if ((newAmt%1)>0){
+            return false;
+        }
+
+        else{
+
+            return true;}
     }
 
 
